@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Advance Password Generator</title>
+  <link rel="stylesheet" href="PasswordGen.css">
+</head>
+<body>
+  <div class="background-animation"></div>
+
+  <div class="container">
+    <div class="app">
+      <div class="header">
+        <h1>🔐 Password Generator</h1>
+        <p>Create strong, secure passwords instantly</p>
+      </div>
+
+      <div class="password-output">
+        <div class="output-field">
+          <input type="text" id="password" readonly placeholder="Generate to create password...">
+          <button id="copyBtn" class="copy-btn" title="Copy to clipboard">
+            <span class="copy-icon">
+              <img src="copy.png" alt="">
+            </span>
+          </button>
+        </div>
+        <div class="strength-indicator">
+          <div class="strength-bar">
+            <div class="strength-fill" id="strengthFill"></div>
+          </div>
+          <span class="strength-text" id="strengthText">Click Generate</span>
+        </div>
+      </div>
+
+      <div class="controls">
+        <div class="length-control">
+          <label for="lengthSlider">Password Length: <span id="lengthValue">12</span></label>
+          <input type="range" id="lengthSlider" class="slider" min="4" max="50" value="12">
+        </div>
+
+        <div class="options-grid">
+          <div class="option">
+            <input type="checkbox" id="uppercase" checked title="uppercase">
+            <label for="uppercase">Uppercase (A-Z)</label>
+          </div>
+          <div class="option">
+            <input type="checkbox" id="lowercase" checked title="lowercase">
+            <label for="lowercase">Lowercase (a-z)</label>
+          </div>
+          <div class="option">
+            <input type="checkbox" id="numbers" checked title="numbers">
+            <label for="numbers">Numbers (0-9)</label>
+          </div>
+          <div class="option">
+            <input type="checkbox" id="symbols" checked title="symbols">
+            <label for="lowercase">Symbols (!@#$...)</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button id="generateBtn" class="generate-btn">
+          <span class="btn-text">Generate Password</span>
+          <span class="btn-icon">⚡</span>
+        </button>
+      </div>
+
+      <div class="tips">
+        <h3>💡Security Tips</h3>
+        <ul>
+          <li>Use at least 12 characters for strong security</li>
+          <li>Include all character types for maximum</li>
+          <li>Never reuse passwords across different accounts</li>
+          <li>Store passwords in a secure password manager</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script src="PasswordGen.js"></script>
+</body>
+</html>
