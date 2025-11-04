@@ -330,6 +330,7 @@ class PasswordGeneratorUI{
     this.generateBtn = document.getElementById('generateBtn');
     this.copyBtn = document.getElementById('copyBtn');
     this.copyIcon = this.copyBtn.querySelector('.copy-icon');
+    this.copyImage = document.getElementById('copyImage')
   }
 
   bindEvents(){
@@ -555,7 +556,7 @@ class PasswordGeneratorUI{
       // Restore original image 
 
       this.copyImage.style.display = 'block';
-      this.copyIcon.innerHTML = `<img scr="${originalSrc}" alt="${originalAlt}" id="copyImage">`;
+      this.copyIcon.innerHTML = `<img src="${originalSrc}" alt="${originalAlt}" id="copyImage">`;
 
       // Re-reference the image element after innerHTML change 
 
