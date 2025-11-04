@@ -538,7 +538,7 @@ class PasswordGeneratorUI{
   showCopyFeedback(icon, text){
     // Store original image source 
 
-    const originalSrc = this.copyImage.scr;
+    const originalSrc = this.copyImage.src;
     const originalAlt = this.copyImage.alt;
 
     // Hide image and show text feedback 
