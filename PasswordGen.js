@@ -536,16 +536,30 @@ class PasswordGeneratorUI{
   }
 
   showCopyFeedback(icon, text){
-    const originalIcon = this.copyIcon.textContent;
-    this.copyIcon.textContent = icon;
+    // Store original image source 
+
+    const originalSrc = this.copyImage.scr;
+    const originalAlt = this.copyImage.alt;
+
+    // Hide image and show text feedback 
+
+    this.copyImage.style.display ='none';
+    this.copyIcon.innerHTML = icon;
     this.copyBtn.title = text;
 
-    // Add Animate
+    // Add Animation
 
     this.copyBtn.style.transform = 'scale(1.1)';
 
     setTimeout(()=>{
-      this.copyIcon.textContent = originalIcon;
+      // Restore original image 
+
+      this.copyImage.style.display = 'block';
+      this.copyIcon.innerHTML = `<img scr="${originalSrc}" alt="${originalAlt}" id="copyImage">`;
+
+      // Re-reference the image element after innerHTML change 
+
+      this.copyImage = document.getElementById('copyImage');
       this.copyBtn.title = 'Copy to clipboard';
       this.copyBtn.style.transform = 'scale(1)';
     }, 1500);
