@@ -559,6 +559,14 @@ class PasswordGeneratorUI {
     }, 80);
   }
 
+  // ── Entropy Display (Phase C) ──
+  _updateEntropyDisplay(password) {
+    const data = this.generator.calculateEntropy(password);
+    this.entropyValue.textContent  = `${data.bits} bits`;
+    this.crackTime.textContent     = data.crackTime;
+    this.charsetSizeEl.textContent = data.charsetSize ? `${data.charsetSize} chars` : '—';
+  }
+
   // ── Password Visibility Toggle (Phase D) ──
   _toggleVisibility() {
     this.isVisible = !this.isVisible;
