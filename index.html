@@ -4,69 +4,180 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PassNova - Advanced Password Generator</title>
+  <!-- SEO & Description -->
+  <meta name="description" content="PassNova — Generate strong, secure passwords and passphrases instantly. Free, offline-ready, no data stored.">
+  <meta name="keywords" content="password generator, secure password, passphrase, password strength, offline">
+  <meta name="author" content="Aditya Kumar Bharti">
+  <meta name="robots" content="index, follow">
+
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="manifest.json">
+ 
+  <!-- Theme Color (browser chrome) -->
+  <meta name="theme-color" content="#667eea" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#818cf8" media="(prefers-color-scheme: light)">
+ 
+  <!-- iOS PWA Support -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="PassNova">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="icons/icon-152.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="icons/icon-144.png">
+ 
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/icon-96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="icons/icon-72.png">
+ 
+  <!-- Open Graph (Social Preview) -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="PassNova - Advanced Password Generator">
+  <meta property="og:description" content="Generate strong, secure passwords and passphrases instantly. Free and offline-ready.">
+  <meta property="og:url" content="https://adityakbharti-passnova.netlify.app">
+  <meta property="og:image" content="https://adityakbharti-passnova.netlify.app/icons/icon-512.png">
+ 
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="PassNova - Password Generator">
+  <meta name="twitter:description" content="Generate strong, secure passwords instantly. Free & offline-ready.">
+
   <link rel="stylesheet" href="PasswordGen.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </head>
 <body>
   <div class="background-animation"></div>
 
+  <!-- Theme Toggle -->
+  <button id="themeToggle" class="theme-toggle" title="Toggle Dark/Light Mode" aria-label="Toggle theme">
+    <i class="bi bi-moon-fill" id="themeIcon"></i>
+  </button>
+
   <div class="container">
     <div class="app">
+
+      <!-- Header -->
       <div class="header">
         <h1>🔐 PassNova</h1>
         <p>Generate unbreakable passwords instantly</p>
       </div>
 
-      <div class="password-output">
-        <div class="output-field">
-          <input type="text" id="password" readonly placeholder="Generate to create password...">
-          <button id="copyBtn" class="copy-btn" title="Copy to clipboard">
-            <span class="copy-icon">
-              <img src="copy.png" alt="copy" id="copyImage">
-            </span>
+      <!-- Password Panel -->
+      <div class="tab-panel active" id="panelPassword" role="tabpanel">
+        
+        <!-- Password Output -->
+        <div class="password-output">
+          <div class="output-field">
+            <input type="text" id="password" readonly placeholder="ClickGenerate to create password..." aria-label="Generated password">
+            <button id="visibilityBtn" class="visibility-btn" title="Toggle visibility" aria-label="Toggle password visibility">
+              <i class="bi bi-eye" id="visibilityIcon"></i>
+            </button>
+            <button id="copyBtn" class="copy-btn" title="Copy password to clipboard">
+              <span class="copy-icon">
+                <img src="copy.png" alt="copy" id="copyImage">
+              </span>
+            </button>
+          </div>
+          
+          <!-- Strength Indicator -->
+          <div class="strength-indicator">
+            <div class="strength-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Password strength">
+              <div class="strength-fill" id="strengthFill"></div>
+            </div>
+            <span class="strength-text" id="strengthText">Click Generate</span>
+          </div>
+
+          <!-- Entropy Display (Phase C) -->
+          <div class="entropy-display" id="entropyDisplay" aria-live="polite">
+            <div class="entropy-item">
+              <span class="entropy-label">Entropy</span>
+              <span class="entropy-value" id="entropyValue">—</span>
+            </div>
+            <div class="entropy-item">
+              <span class="entropy-label">Crack Time</span>
+              <span class="entropy-value" id="crackTime">—</span>
+            </div>
+            <div class="entropy-item">
+              <span class="entropy-label">Charset</span>
+              <span class="entropy-value" id="charsetSize">—</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Controls -->
+        <div class="controls">
+          <div class="length-control">
+            <label for="lengthSlider">Password Length: <span id="lengthValue">12</span></label>
+            <input type="range" id="lengthSlider" class="slider" min="4" max="50" value="12" aria-label="Password length">
+          </div>
+          
+          <div class="options-grid" id="optionsGrid">
+            <div class="option">
+              <input type="checkbox" id="uppercase" checked aria-label="Include uppercase letters">
+              <label for="uppercase">Uppercase (A-Z)</label>
+            </div>
+            <div class="option">
+              <input type="checkbox" id="lowercase" checked aria-label="Include lowercase letters">
+              <label for="lowercase">Lowercase (a-z)</label>
+            </div>
+            <div class="option">
+              <input type="checkbox" id="numbers" checked aria-label="Include numbers">
+              <label for="numbers">Numbers (0-9)</label>
+            </div>
+            <div class="option">
+              <input type="checkbox" id="symbols" checked aria-label="Include symbols">
+              <label for="symbols">Symbols (!@#$...)</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Presets (Phase C) -->
+        <div class="presets-section">
+          <label class="presets-label">Quick Presets</label>
+          <div class="presets-grid">
+            <button class="preset-btn" data-preset="banking" aria-label="Banking preset">
+              <i class="bi bi-bank"></i> Banking
+            </button>
+            <button class="preset-btn" data-preset="social" aria-label="Social media preset">
+              <i class="bi bi-people"></i> Social
+            </button>
+            <button class="preset-btn" data-preset="gaming" aria-label="Gaming preset">
+              <i class="bi bi-controller"></i> Gaming
+            </button>
+            <button class="preset-btn" data-preset="developer" aria-label="Developer preset">
+              <i class="bi bi-code-slash"></i> Developer
+            </button>
+            <button class="preset-btn" data-preset="pin" aria-label="PIN preset">
+              <i class="bi bi-123"></i> PIN
+            </button>
+            <button class="preset-btn" data-preset="secure" aria-label="High security preset">
+              <i class="bi bi-shield-lock"></i> High Sec
+            </button>
+          </div>
+        </div>
+        
+        <!-- Generate Button -->
+        <div class="actions">
+          <button id="generateBtn" class="generate-btn" aria-label="Generate password (Ctrl+G)">
+            <span class="btn-text">Generate Password</span>
+            <span class="btn-icon">⚡</span>
           </button>
         </div>
-        <div class="strength-indicator">
-          <div class="strength-bar">
-            <div class="strength-fill" id="strengthFill"></div>
-          </div>
-          <span class="strength-text" id="strengthText">Click Generate</span>
+      </div>
+ 
+      <!-- Password History (Phase C) -->
+      <div class="history-section" id="historySection">
+        <div class="history-header">
+          <h3><i class="bi bi-clock-history"></i> Recent</h3>
+          <button id="clearHistoryBtn" class="clear-history-btn" title="Clear history" aria-label="Clear password history">
+            <i class="bi bi-trash3"></i>
+          </button>
+        </div>
+        <div id="historyList" class="history-list" aria-label="Password history" aria-live="polite">
+          <p class="history-empty">No passwords generated yet.</p>
         </div>
       </div>
 
-      <div class="controls">
-        <div class="length-control">
-          <label for="lengthSlider">Password Length: <span id="lengthValue">12</span></label>
-          <input type="range" id="lengthSlider" class="slider" min="4" max="50" value="12">
-        </div>
-
-        <div class="options-grid">
-          <div class="option">
-            <input type="checkbox" id="uppercase" checked title="uppercase">
-            <label for="uppercase">Uppercase (A-Z)</label>
-          </div>
-          <div class="option">
-            <input type="checkbox" id="lowercase" checked title="lowercase">
-            <label for="lowercase">Lowercase (a-z)</label>
-          </div>
-          <div class="option">
-            <input type="checkbox" id="numbers" checked title="numbers">
-            <label for="numbers">Numbers (0-9)</label>
-          </div>
-          <div class="option">
-            <input type="checkbox" id="symbols" checked title="symbols">
-            <label for="lowercase">Symbols (!@#$...)</label>
-          </div>
-        </div>
-      </div>
-
-      <div class="actions">
-        <button id="generateBtn" class="generate-btn">
-          <span class="btn-text">Generate Password</span>
-          <span class="btn-icon">⚡</span>
-        </button>
-      </div>
-
+      <!-- Security Tips -->
       <div class="tips">
         <h3>💡Security Tips</h3>
         <ul>
@@ -76,7 +187,29 @@
           <li>Store passwords in a secure password manager</li>
         </ul>
       </div>
+
+      <!-- Keyboard Shortcuts (Phase D) -->
+      <div class="shortcuts-hint">
+        <span><kbd>Ctrl</kbd>+<kbd>G</kbd> Generate</span>
+        <span><kbd>Ctrl</kbd>+<kbd>C</kbd> Copy</span>
+      </div>
     </div>
+  </div>
+
+  <!-- Mobile Bottom Action Bar (Phase D) -->
+  <div class="mobile-action-bar" id="mobileActionBar">
+    <button class="mobile-action-btn" id="mobileGenerateBtn" aria-label="Generate">
+      <i class="bi bi-lightning-charge-fill"></i>
+      <span>Generate</span>
+    </button>
+    <button class="mobile-action-btn" id="mobileCopyBtn" aria-label="Copy">
+      <i class="bi bi-clipboard"></i>
+      <span>Copy</span>
+    </button>
+    <button class="mobile-action-btn" id="mobileThemeBtn" aria-label="Theme">
+      <i class="bi bi-circle-half"></i>
+      <span>Theme</span>
+    </button>
   </div>
 
   <footer class="footer">
